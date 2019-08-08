@@ -32,6 +32,7 @@ namespace ECommerce.WebUI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedDatabase.Seed();
             }
 
             app.UseMvcWithDefaultRoute();
