@@ -3,10 +3,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>List</h1>
 
-@foreach (var product in Model.Products)
-{
-    @product.Name  @product.Price
-}
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>list</title>
+    <link href="/modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h1>List</h1>
+
+    @foreach (var product in Model.Products)
+    {
+<p> @product.Name @product.Price</p>
+    }
+</body>
+</html>

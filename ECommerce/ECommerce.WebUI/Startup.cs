@@ -6,6 +6,7 @@ using ECommerce.Business.Abstract;
 using ECommerce.Business.Concrete;
 using ECommerce.DataAccess.Abstract;
 using ECommerce.DataAccess.Concrete.EfCore;
+using ECommerce.WebUI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,8 @@ namespace ECommerce.WebUI
                 app.UseDeveloperExceptionPage();
                 SeedDatabase.Seed();
             }
+            app.UseStaticFiles();
+            app.CustomStaticFiles(); //middleware
 
             app.UseMvcWithDefaultRoute();
         }
