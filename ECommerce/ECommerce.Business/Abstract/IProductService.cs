@@ -9,7 +9,7 @@ namespace ECommerce.Business.Abstract
     {
         Product GetById(int id);
         List<Product> GetAll();
-
+        Product GetProductDetails(int id);
         List<Product> GetPopular();
 
         void Create(Product entity);

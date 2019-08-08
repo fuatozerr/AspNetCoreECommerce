@@ -28,6 +28,8 @@ namespace ECommerce.DataAccess.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+
                     Price = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
