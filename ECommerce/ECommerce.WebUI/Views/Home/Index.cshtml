@@ -1,0 +1,12 @@
+﻿@model ECommerce.WebUI.Models.ProductListModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List</h1>
+
+@foreach (var product in Model.Products)
+{
+    @product.Name  @product.Price
+}
+

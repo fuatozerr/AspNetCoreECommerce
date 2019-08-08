@@ -10,6 +10,8 @@ namespace ECommerce.Business.Abstract
         Product GetById(int id);
         List<Product> GetAll();
 
+        List<Product> GetPopular();
+
         void Create(Product entity);
         void Update(Product entity);
 

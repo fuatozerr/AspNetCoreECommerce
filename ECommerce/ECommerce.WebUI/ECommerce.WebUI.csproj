@@ -17,9 +17,4 @@
     <ProjectReference Include="..\ECommerce.Entities\ECommerce.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-
 </Project>

@@ -37,6 +37,12 @@ namespace ECommerce.Business.Concrete
             return _productDal.GetById(id);
         }
 
+        public List<Product> GetPopular()
+        {
+            
+            return _productDal.GetAll(x => x.Price > 2000 && x.Price < 6000);
+        }
+
         public void Update(Product entity)
         {
             _productDal.Update(entity);
