@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ECommerce.Business.Abstract;
+using ECommerce.Entities;
 using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,21 @@ namespace ECommerce.WebUI.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Index()
+        public IActionResult Details(int? id)
         {
-            return View();
+            if(id==null)
+            {
+                return NotFound();
+            }
+
+            Product product= _productService.GetById((int)id);
+
+            if(product==null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
         
         public IActionResult List()
