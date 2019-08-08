@@ -36,6 +36,7 @@ namespace ECommerce.WebUI
                 SeedDatabase.Seed();
             }
             app.UseStaticFiles();
+
             app.CustomStaticFiles(); //middleware
 
             app.UseMvcWithDefaultRoute();

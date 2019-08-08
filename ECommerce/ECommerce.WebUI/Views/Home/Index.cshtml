@@ -1,21 +1,19 @@
 ﻿@model ECommerce.WebUI.Models.ProductListModel
-@{
-    ViewData["Title"] = "Index";
-}
 
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item">Telefon</li>
+                <li class="list-group-item">Bilgisayar</li>
 
+                <li class="list-group-item">Elektronik</li>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>list</title>
-    <link href="/modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-    <h1>List</h1>
-
-    @foreach (var product in Model.Products)
-    {
-<p> @product.Name @product.Price</p>
-    }
-</body>
-</html>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <partial name="_slider" />
+            @foreach (var product in Model.Products)
+            {
+                <p> @product.Name @product.Price</p>}
+        </div>
+    </div>

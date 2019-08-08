@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ECommerce.Entities\ECommerce.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
 </Project>

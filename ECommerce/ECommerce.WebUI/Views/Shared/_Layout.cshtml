@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/modules/bootstrap/dist/css/bootstrap.min.css"  />
+    <link href="/css/style.css" rel="stylesheet" />
+
+    <title>_Layout</title>
+</head>
+<body>
+    <partial name="_navbar" />
+    <div class="container pt-100 mb-5">
+        @RenderBody()
+    </div>
+
+    <script src="/modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="/modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
