@@ -44,7 +44,18 @@ namespace ECommerce.WebUI
 
             app.CustomStaticFiles(); //middleware
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "products",
+                    template: "products/{category?}",
+                    defaults:new {controller="Shop",action="List" });
+
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

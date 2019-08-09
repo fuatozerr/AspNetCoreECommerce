@@ -26,5 +26,19 @@ namespace ECommerce.DataAccess.Concrete.EfCore
                     .FirstOrDefault();
             }
         }
+
+        public List<Product> GetProductsByCategory(string category)
+        {
+            using(var context =new ShopContext())
+            {
+                var products = context.Products.AsQueryable();
+                if(!string.IsNullOrEmpty(category))
+                {
+                    products = products.Include(x => x.ProductCategories)
+                        .ThenInclude(x => x.Category).Where(x => x.ProductCategories.Any(a=>a.Category.Name.ToLower()==category.ToLower()));
+                }
+                return products.ToList();
+            }
+        }
     }
 }

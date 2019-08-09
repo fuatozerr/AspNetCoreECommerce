@@ -11,6 +11,7 @@ namespace ECommerce.Business.Abstract
         List<Product> GetAll();
         Product GetProductDetails(int id);
         List<Product> GetPopular();
+        List<Product> GetProductsByCategory(string category);
 
         void Create(Product entity);
         void Update(Product entity);

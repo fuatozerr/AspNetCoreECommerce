@@ -39,13 +39,15 @@ namespace ECommerce.WebUI.Controllers
             }); ;
         }
         
-        public IActionResult List()
+        public IActionResult List(string category)
         {
             return View(new ProductListModel()
             {
-                Products = _productService.GetAll()
+                Products = _productService.GetProductsByCategory(category)
 
             });
         }
+
+
     }
 }

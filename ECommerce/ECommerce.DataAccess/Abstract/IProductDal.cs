@@ -1,4 +1,4 @@
-﻿using ECommerce.Entities;
+﻿    using ECommerce.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,8 @@ namespace ECommerce.DataAccess.Abstract
         IEnumerable<Product> GetPopularProduct();
 
         Product GetProductDetails(int id);
+
+        List<Product> GetProductsByCategory(string category);
 
 
     }
