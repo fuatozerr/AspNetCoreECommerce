@@ -20,7 +20,7 @@ namespace ECommerce.WebUI.ViewComponents
         public IViewComponentResult Invoke()
         {
             return View(new CategoryListModel() {
-
+                SelectedCategory=RouteData.Values["category"]?.ToString(),
                 Categories=_categoryService.GetAll()
             }); 
         }
