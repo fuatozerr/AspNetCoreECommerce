@@ -39,11 +39,13 @@ namespace ECommerce.WebUI.Controllers
             }); ;
         }
         
-        public IActionResult List(string category)
+        //sayfalama ve categori filtreleme ürün/telefon?page=1
+        public IActionResult List(string category,int page=1)
         {
+            const int pagesize = 3;
             return View(new ProductListModel()
             {
-                Products = _productService.GetProductsByCategory(category)
+                Products = _productService.GetProductsByCategory(category,page, pagesize)
 
             });
         }

@@ -49,9 +49,9 @@ namespace ECommerce.Business.Concrete
         }
 
 
-        public List<Product> GetProductsByCategory(string category)
+        public List<Product> GetProductsByCategory(string category,int page,int pagesize)
         {
-            return _productDal.GetProductsByCategory(category);
+            return _productDal.GetProductsByCategory(category,page,pagesize);
         }
 
         public void Update(Product entity)

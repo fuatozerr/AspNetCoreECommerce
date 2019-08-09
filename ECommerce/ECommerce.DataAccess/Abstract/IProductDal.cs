@@ -13,7 +13,7 @@ namespace ECommerce.DataAccess.Abstract
 
         Product GetProductDetails(int id);
 
-        List<Product> GetProductsByCategory(string category);
+        List<Product> GetProductsByCategory(string category,int page,int pagesize);
 
 
     }

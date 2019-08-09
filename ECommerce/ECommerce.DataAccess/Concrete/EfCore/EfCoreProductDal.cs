@@ -27,7 +27,7 @@ namespace ECommerce.DataAccess.Concrete.EfCore
             }
         }
 
-        public List<Product> GetProductsByCategory(string category)
+        public List<Product> GetProductsByCategory(string category,int page, int pagesize)
         {
             using(var context =new ShopContext())
             {
@@ -37,7 +37,7 @@ namespace ECommerce.DataAccess.Concrete.EfCore
                     products = products.Include(x => x.ProductCategories)
                         .ThenInclude(x => x.Category).Where(x => x.ProductCategories.Any(a=>a.Category.Name.ToLower()==category.ToLower()));
                 }
-                return products.ToList();
+                return products.Skip((page-1)*pagesize).Take(pagesize).ToList(); //sayfalama
             }
         }
     }
