@@ -1,0 +1,59 @@
+﻿@model  ECommerce.WebUI.Models.ProductModel
+@{
+    ViewData["Title"] = "CreateProduct";
+}
+
+<h1>Create Product</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+        <form asp-controller="Admin" asp-action="CreateProduct" method="post">
+
+            <div class="form-group row">
+                <label asp-for="Name" class="col-md-2 col-form-label">  Name</label>
+                <div class="col-md-10">
+                    <input asp-for="Name" value="" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label asp-for="ImageUrl" class="col-md-2 col-form-label"> Image URL</label>
+                <div class="col-md-10">
+                    <input asp-for="ImageUrl" value="" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label asp-for="Description" class="col-md-2 col-form-label"> Description</label>
+                <div class="col-md-10">
+                    <textarea asp-for="Description" class="form-control"></textarea>
+
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label asp-for="Price" class="col-md-2 col-form-label"> Price</label>
+                <div class="col-md-10">
+                    <input asp-for="Price" value="" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-md-10 offset-md-2">
+                    <button type="submit" value="" class="btn btn-primary"> Save Product</button>
+                </div>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+
+</div>
