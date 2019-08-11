@@ -45,6 +45,17 @@ namespace ECommerce.WebUI.Controllers
             const int pagesize = 3;
             return View(new ProductListModel()
             {
+                PageInfo =new PageInfo()
+                {
+                    TotalItems=_productService.GetCountByCategory(category),
+                    CurrentPage = page,
+                    ItemsPerPage=pagesize,
+                    CurrentCategory=category
+
+
+
+                },
+
                 Products = _productService.GetProductsByCategory(category,page, pagesize)
 
             });

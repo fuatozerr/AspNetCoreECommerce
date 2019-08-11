@@ -1,8 +1,10 @@
 ﻿@model ECommerce.WebUI.Models.ProductListModel
+@addTagHelper "*,Microsoft.AspNetCore.Mvc.TagHelpers"
+@addTagHelper ECommerce.WebUI.TagHelpers.*,ECommerce.WebUI
 
 <div class="row">
     <div class="col-md-3">
-       @await Component.InvokeAsync("CategoryList")
+        @await Component.InvokeAsync("CategoryList")
     </div>
     <div class="col-md-9">
         <div class="row">
@@ -14,6 +16,6 @@
 
             }
         </div>
-
+        <div page-model="@Model.PageInfo"></div>
     </div>
 </div>

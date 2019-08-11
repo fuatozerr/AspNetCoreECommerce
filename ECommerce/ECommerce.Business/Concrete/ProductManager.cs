@@ -37,6 +37,11 @@ namespace ECommerce.Business.Concrete
             return _productDal.GetById(id);
         }
 
+        public int GetCountByCategory(string category)
+        {
+            return _productDal.GetProductsByCategory(category);
+        }
+
         public List<Product> GetPopular()
         {
             

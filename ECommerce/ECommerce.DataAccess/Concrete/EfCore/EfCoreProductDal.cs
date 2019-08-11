@@ -40,5 +40,21 @@ namespace ECommerce.DataAccess.Concrete.EfCore
                 return products.Skip((page-1)*pagesize).Take(pagesize).ToList(); //sayfalama
             }
         }
+
+        public int GetProductsByCategory(string category)
+        {
+
+            using (var context = new ShopContext())
+            {
+                var products = context.Products.AsQueryable();
+                if (!string.IsNullOrEmpty(category))
+                {
+                    products = products.Include(x => x.ProductCategories)
+                        .ThenInclude(x => x.Category).Where(x => x.ProductCategories.Any(a => a.Category.Name.ToLower() == category.ToLower()));
+                }
+                return products.Count(); //sayfalama
+            }
+
+        }
     }
 }
