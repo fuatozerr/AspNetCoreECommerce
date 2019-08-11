@@ -20,7 +20,10 @@ namespace ECommerce.WebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new ProductListModel()
+            {
+                Products=_productService.GetAll()
+            });
         }
         [HttpGet]
         public IActionResult CreateProduct()
@@ -43,5 +46,63 @@ namespace ECommerce.WebUI.Controllers
             return Redirect("Index");
 
         }
+
+
+        public IActionResult Edit(int? id)
+        {
+            if(id==null)
+            {
+                return NotFound();
+            }
+
+
+            var entity = _productService.GetById((int)id);
+
+            if(entity==null)
+            {
+                return NotFound();
+            }
+
+            var model = new ProductModel()
+            {
+                Id=entity.Id,
+                Description=entity.Description,
+                ImageUrl=entity.ImageUrl,
+                Name=entity.Name,
+                Price=entity.Price
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Edit(ProductModel model)
+        {
+            var entity = _productService.GetById(model.Id);
+
+            entity.Name = model.Name;
+            entity.ImageUrl = model.ImageUrl;
+            entity.Price = model.Price;
+            entity.Description = model.Description;
+
+
+            _productService.Update(entity);
+            return RedirectToAction("Edit",entity);
+        }
+
+
+       
+
+        [HttpPost]
+        public IActionResult Delete(int productId)
+        {
+            var entity = _productService.GetById(productId);
+
+            _productService.Delete(entity);
+
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }
