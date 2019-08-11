@@ -17,14 +17,14 @@ namespace ECommerce.WebUI.Controllers
         public AdminController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
-                _categoryService = categoryService;
+            _categoryService = categoryService;
         }
 
         public IActionResult ProductList()
         {
             return View(new ProductListModel()
             {
-                Products=_productService.GetAll()
+                Products = _productService.GetAll()
             });
         }
         [HttpGet]
@@ -38,7 +38,7 @@ namespace ECommerce.WebUI.Controllers
         {
             var entity = new Product
             {
-                Name = model.Name,  
+                Name = model.Name,
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price
@@ -52,7 +52,7 @@ namespace ECommerce.WebUI.Controllers
 
         public IActionResult EditProduct(int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -60,18 +60,18 @@ namespace ECommerce.WebUI.Controllers
 
             var entity = _productService.GetById((int)id);
 
-            if(entity==null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
             var model = new ProductModel()
             {
-                Id=entity.Id,
-                Description=entity.Description,
-                ImageUrl=entity.ImageUrl,
-                Name=entity.Name,
-                Price=entity.Price
+                Id = entity.Id,
+                Description = entity.Description,
+                ImageUrl = entity.ImageUrl,
+                Name = entity.Name,
+                Price = entity.Price
             };
 
             return View(model);
@@ -105,10 +105,10 @@ namespace ECommerce.WebUI.Controllers
         {
             return View(new CategoryList()
             {
-                Categories=_categoryService.GetAll()
-            });;
+                Categories = _categoryService.GetAll()
+            }); ;
         }
-        
+
         public IActionResult CreateCategory()
         {
             return View();
@@ -119,7 +119,7 @@ namespace ECommerce.WebUI.Controllers
         {
             var entity = new Category()
             {
-                Name=model.Name
+                Name = model.Name
             };
             _categoryService.Create(entity);
             return RedirectToAction("CategoryList");
@@ -135,7 +135,7 @@ namespace ECommerce.WebUI.Controllers
                 Id = entity.Id,
                 Name = entity.Name,
                 Products = entity.ProductCategories.Select(p => p.Product).ToList()
-            }) ; 
+            });
 
 
 
@@ -158,10 +158,18 @@ namespace ECommerce.WebUI.Controllers
         {
             var entity = _categoryService.GetById(categoryId);
 
-             _categoryService.Delete(entity);
+            _categoryService.Delete(entity);
 
             return RedirectToAction("CategoryList");
 
+        }
+
+        [HttpPost]
+        public IActionResult DeleteFromCategory(int categoryId,int productId)
+        {
+            _categoryService.DeleteFromCategory(categoryId, productId);
+
+            return Redirect("/admin/editcategory/"+categoryId);
         }
     }
 }

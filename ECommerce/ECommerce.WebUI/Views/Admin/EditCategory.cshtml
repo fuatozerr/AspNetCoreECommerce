@@ -63,8 +63,10 @@
                             <td>
                                 <a class="btn btn-primary btn-sm mr-2" href="/admin/products/@item.Id">Edit</a>
 
-                                <form action="/Admin/DeleteProduct" method="post">
+                                <form action="/Admin/deletefromcategory" method="post">
                                     <input type="hidden" name="productId" value="@item.Id" />
+                                    <input type="hidden" name="categoryId" value="@Model.Id" />
+
                                     <button type="submit" class="btn btn-danger"> Danger</button>
                                 </form>
                             </td>

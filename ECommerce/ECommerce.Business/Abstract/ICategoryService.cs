@@ -16,5 +16,6 @@ namespace ECommerce.Business.Abstract
         void Delete(Category entity);
 
         Category GetById(int id);
+        void DeleteFromCategory(int categoryId, int productId);
     }
 }
