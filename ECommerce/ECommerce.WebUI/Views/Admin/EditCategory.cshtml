@@ -8,7 +8,7 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
 
         <form asp-controller="Admin" asp-action="EditCategory" method="post">
             <input type="hidden" name="categoryId" value="@Model.Id" />
@@ -34,5 +34,55 @@
     </div>
 
 
+    <div class="col-md-4">
 
+
+        @if (Model.Products.Count() > 0)
+        {
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td style="width:30px;">Id</td>
+                        <td style="width:100px;">Image</td>
+                        <td>Name</td>
+                        <td style="width:12px;">Price</td>
+                        <td style="width:150px;"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>
+                                <img src="~/img/@item.ImageUrl" width="80" />
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>
+                                <a class="btn btn-primary btn-sm mr-2" href="/admin/products/@item.Id">Edit</a>
+
+                                <form action="/Admin/DeleteProduct" method="post">
+                                    <input type="hidden" name="productId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-danger"> Danger</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <h4>No Products</h4>
+            </div>
+        }
+
+
+
+    </div>
 </div>

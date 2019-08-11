@@ -8,7 +8,8 @@ namespace ECommerce.Business.Abstract
    public interface ICategoryService
     {
         List<Category> GetAll();
-        
+
+        Category GetByIdWithProducts(int id);
         void Create(Category entity);
         void Update(Category entity);
 
