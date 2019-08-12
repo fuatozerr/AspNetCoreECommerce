@@ -36,17 +36,20 @@ namespace ECommerce.WebUI.Controllers
         [HttpPost]
         public IActionResult CreateProduct(ProductModel model)
         {
-            var entity = new Product
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                Price = model.Price
-            };
+                var entity = new Product
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl,
+                    Price = model.Price
+                };
+                _productService.Create(entity);
+                return Redirect("ProductList");
 
-            _productService.Create(entity);
-            return Redirect("ProductList");
-
+            }
+            return View(model);
         }
 
 
