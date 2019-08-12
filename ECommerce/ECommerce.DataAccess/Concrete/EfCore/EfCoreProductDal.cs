@@ -67,5 +67,25 @@ namespace ECommerce.DataAccess.Concrete.EfCore
             }
 
         }
+
+        public void Update(Product entity, int[] categoryIds)
+        {
+            using(var context=new ShopContext())
+            {
+                var product = context.Products.Include(i=>i.ProductCategories).FirstOrDefault(x => x.Id == entity.Id);
+
+                product.Name = entity.Name;
+                product.ImageUrl = entity.ImageUrl;
+                product.Price = entity.Price;
+                product.ProductCategories = categoryIds.Select(catid => new ProductCategory()
+                {
+                    CategoryId=catid,
+                    ProductId=entity.Id
+                }).ToList();
+
+                context.SaveChanges();
+            }
+
+        }
     }
 }

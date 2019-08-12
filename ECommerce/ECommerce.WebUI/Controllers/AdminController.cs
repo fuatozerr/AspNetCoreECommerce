@@ -79,7 +79,7 @@ namespace ECommerce.WebUI.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model)
+        public IActionResult EditProduct(ProductModel model, int[] categoryIds)
         {
             var entity = _productService.GetById(model.Id);
 
@@ -89,7 +89,7 @@ namespace ECommerce.WebUI.Controllers
             entity.Description = model.Description;
 
 
-            _productService.Update(entity);
+            _productService.Update(entity,categoryIds);
             return RedirectToAction("EditProduct", entity);
         }
 
