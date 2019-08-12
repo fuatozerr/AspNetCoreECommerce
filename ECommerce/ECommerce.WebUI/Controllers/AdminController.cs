@@ -58,7 +58,7 @@ namespace ECommerce.WebUI.Controllers
             }
 
 
-            var entity = _productService.GetById((int)id);
+            var entity = _productService.GetByIdWithCategories((int)id);
 
             if (entity == null)
             {
@@ -71,8 +71,10 @@ namespace ECommerce.WebUI.Controllers
                 Description = entity.Description,
                 ImageUrl = entity.ImageUrl,
                 Name = entity.Name,
-                Price = entity.Price
+                Price = entity.Price,
+                SelectedCategories = entity.ProductCategories.Select(x => x.Category).ToList()
             };
+            ViewBag.Categories = _categoryService.GetAll();
 
             return View(model);
         }

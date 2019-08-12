@@ -11,6 +11,17 @@ namespace ECommerce.DataAccess.Concrete.EfCore
 {
     public class EfCoreProductDal : EfCoreGenericRepository<Product, ShopContext>,   IProductDal
     {
+        public Product GetByIdWithCategories(int id)
+        {
+            using(var context=new ShopContext())
+            {
+                return context.Products.Where(x => x.Id == id)
+                    .Include(x => x.ProductCategories)
+                    .ThenInclude(i => i.Category)
+                    .FirstOrDefault();
+            }
+        }
+
         public IEnumerable<Product> GetPopularProduct()
         {
             throw new NotImplementedException();

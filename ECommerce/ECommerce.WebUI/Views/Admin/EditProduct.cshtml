@@ -6,11 +6,11 @@
 <h1>Edit Product</h1>
 
 <hr />
+<form asp-controller="Admin" asp-action="Edit" method="post">
 
-<div class="row">
-    <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-8">
 
-        <form asp-controller="Admin" asp-action="Edit" method="post">
 
             <input type="hidden" name="Id" value="@Model.Id" />
             <div class="form-group row">
@@ -30,7 +30,7 @@
             <div class="form-group row">
                 <label asp-for="Description" class="col-md-2 col-form-label"> Description</label>
                 <div class="col-md-10">
-                    <textarea asp-for="Description"  class="form-control"> @Model.Description</textarea>
+                    <textarea asp-for="Description" class="form-control"> @Model.Description</textarea>
 
                 </div>
 
@@ -50,11 +50,24 @@
             </div>
 
 
-        </form>
 
+
+        </div>
+
+        <div class="col-md-4">
+
+            @foreach (var item in ViewBag.Categories)
+            {
+               
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="category@(item.Id)" @(Model.SelectedCategories.Any(i => i.Id == item.Id) ? "checked" : "")>
+                    <label class="custom-control-label" for="category@(item.Id)">
+                        @item.Name
+                    </label>
+                </div>
+            }
+        </div>
 
     </div>
-
-
-
-</div>
+</form>
