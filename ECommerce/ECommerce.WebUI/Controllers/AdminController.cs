@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using ECommerce.Business.Abstract;
 using ECommerce.Entities;
 using ECommerce.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductService _productService;

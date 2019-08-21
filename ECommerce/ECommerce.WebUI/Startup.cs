@@ -33,12 +33,14 @@ namespace ECommerce.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-            services.AddDbContext<ApplicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<ApplicationIdentityDbContext>(options =>
+                         options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>().
                 AddEntityFrameworkStores<ApplicationIdentityDbContext>().
                 AddDefaultTokenProviders();
+
+        
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -46,8 +48,8 @@ namespace ECommerce.WebUI
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
 
                 options.Lockout.MaxFailedAccessAttempts = 5; //yanlıs girme hakkı
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -56,7 +58,7 @@ namespace ECommerce.WebUI
                 //options.User.AllowedUserNameCharacters = ""; izin verdiğimiz karakterler 
 
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true; //onay için
+                options.SignIn.RequireConfirmedEmail = false; //onay için
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
             });
@@ -70,8 +72,8 @@ namespace ECommerce.WebUI
                 options.SlidingExpiration = true;
                 options.Cookie = new CookieBuilder
                 {
-                    HttpOnly=true,//scriptler ulasamaz
-                    Name="ShopApp.Security.Cookie"
+                    HttpOnly = true,//scriptler ulasamaz
+                    Name = ".ECommerce.Security.Cookie"
                 };
 
             });
