@@ -38,8 +38,6 @@ namespace ECommerce.WebUI.Controllers
         [HttpPost]
         public async Task< IActionResult > CreateProduct(ProductModel model,IFormFile file)
         {
-
-            
                 if (file != null)
                 {
                   
@@ -58,12 +56,7 @@ namespace ECommerce.WebUI.Controllers
                 _productService.Create(entity);
 
                 }
-
-
-
                 return Redirect("ProductList");
-
-            
         }
 
 

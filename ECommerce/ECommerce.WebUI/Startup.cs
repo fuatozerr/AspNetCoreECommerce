@@ -6,10 +6,14 @@ using ECommerce.Business.Abstract;
 using ECommerce.Business.Concrete;
 using ECommerce.DataAccess.Abstract;
 using ECommerce.DataAccess.Concrete.EfCore;
+using ECommerce.WebUI.Identity;
 using ECommerce.WebUI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShopApp.DataAccess.Concrete.EfCore;
 
@@ -17,15 +21,31 @@ namespace ECommerce.WebUI
 {
     public class Startup
     {
+
+        public IConfiguration Configuration{ get; set; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.AddDbContext<ApplicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().
+                AddEntityFrameworkStores<ApplicationIdentityDbContext>().
+                AddDefaultTokenProviders();
+
             services.AddScoped<IProductDal, EfCoreProductDal>();
             services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
             services.AddScoped<ICategoryService, CategoryManager>();
 
             services.AddScoped<IProductService, ProductManager>();
+
 
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
@@ -43,6 +63,7 @@ namespace ECommerce.WebUI
             app.UseStaticFiles();
 
             app.CustomStaticFiles(); //middleware
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
