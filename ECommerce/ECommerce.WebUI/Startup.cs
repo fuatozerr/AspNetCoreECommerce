@@ -22,7 +22,7 @@ namespace ECommerce.WebUI
     public class Startup
     {
 
-        public IConfiguration Configuration{ get; set; }
+        public IConfiguration Configuration { get; set; }
 
         public Startup(IConfiguration configuration)
         {
@@ -39,6 +39,43 @@ namespace ECommerce.WebUI
             services.AddIdentity<ApplicationUser, IdentityRole>().
                 AddEntityFrameworkStores<ApplicationIdentityDbContext>().
                 AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                //password
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+
+                options.Lockout.MaxFailedAccessAttempts = 5; //yanlıs girme hakkı
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.AllowedForNewUsers = true;
+
+                //options.User.AllowedUserNameCharacters = ""; izin verdiğimiz karakterler 
+
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true; //onay için
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/account/login";
+                options.LogoutPath = "/account/logout";
+                options.AccessDeniedPath = "/account/accessdenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(50);
+                options.SlidingExpiration = true;
+                options.Cookie = new CookieBuilder
+                {
+                    HttpOnly=true,//scriptler ulasamaz
+                    Name="ShopApp.Security.Cookie"
+                };
+
+            });
+
 
             services.AddScoped<IProductDal, EfCoreProductDal>();
             services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
@@ -84,7 +121,7 @@ namespace ECommerce.WebUI
                 routes.MapRoute(
                     name: "products",
                     template: "products/{category?}",
-                    defaults:new {controller="Shop",action="List" });
+                    defaults: new { controller = "Shop", action = "List" });
 
 
                 routes.MapRoute(
