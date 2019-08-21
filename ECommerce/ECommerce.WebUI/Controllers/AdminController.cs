@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ECommerce.Business.Abstract;
 using ECommerce.Entities;
 using ECommerce.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebUI.Controllers
@@ -82,18 +84,34 @@ namespace ECommerce.WebUI.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model, int[] categoryIds)
+        public async Task<IActionResult>EditProduct(ProductModel model, int[] categoryIds,IFormFile file)
         {
+            if(ModelState.IsValid)
+            {
+
+            
+
             var entity = _productService.GetById(model.Id);
 
             entity.Name = model.Name;
             entity.ImageUrl = model.ImageUrl;
             entity.Price = model.Price;
             entity.Description = model.Description;
-
+            if(file!=null)
+                {
+                    entity.ImageUrl = file.FileName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", file.FileName);
+                    using(var stream=new FileStream(path,FileMode.Create))
+                    {
+                      await file.CopyToAsync(stream);
+                    }
+                }
 
             _productService.Update(entity,categoryIds);
             return RedirectToAction("EditProduct", entity);
+        }
+            ViewBag.Categories = _categoryService.GetAll();
+            return View(model);
         }
 
         [HttpPost]

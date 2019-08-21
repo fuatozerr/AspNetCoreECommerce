@@ -17,6 +17,8 @@ namespace ECommerce.Business.Concrete
 
         }
 
+        public string ErrorMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public void Create(Product entity)
         {
             _productDal.Create(entity);
@@ -72,6 +74,11 @@ namespace ECommerce.Business.Concrete
         public void Update(Product entity, int[] categoryIds)
         {
             _productDal.Update(entity, categoryIds);
+        }
+
+        public bool Validate(Product entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

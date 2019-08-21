@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ECommerce.Business.Abstract
 {
-    public interface IProductService
+    public interface IProductService:IValidator<Product>
     {
         Product GetById(int id);
         List<Product> GetAll();

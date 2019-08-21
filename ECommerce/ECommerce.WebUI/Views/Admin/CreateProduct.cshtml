@@ -6,6 +6,13 @@
 @section Scripts{
     <script src="~/modules/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/modules/ckeditor/ckeditor.js"></script>
+
+    <script>
+
+        CKEDITOR.replace("editor")
+
+    </script>
 }
 
 <h1>Create Product</h1>
@@ -34,7 +41,8 @@
             <div class="form-group row">
                 <label asp-for="Description" class="col-md-2 col-form-label"> Description</label>
                 <div class="col-md-10">
-                    <textarea asp-for="Description" class="form-control"></textarea>
+
+                    <textarea id="editor" asp-for="Description" class="form-control"></textarea>
 
                 </div>
 
