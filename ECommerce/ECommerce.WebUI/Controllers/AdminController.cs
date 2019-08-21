@@ -36,22 +36,34 @@ namespace ECommerce.WebUI.Controllers
 
         }
         [HttpPost]
-        public IActionResult CreateProduct(ProductModel model)
+        public async Task< IActionResult > CreateProduct(ProductModel model,IFormFile file)
         {
-            if (ModelState.IsValid)
-            {
+
+            
+                if (file != null)
+                {
+                  
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", file.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
                 var entity = new Product
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    ImageUrl = model.ImageUrl,
+                    ImageUrl = file.FileName,
                     Price = model.Price
                 };
                 _productService.Create(entity);
+
+                }
+
+
+
                 return Redirect("ProductList");
 
-            }
-            return View(model);
+            
         }
 
 

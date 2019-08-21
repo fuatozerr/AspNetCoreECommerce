@@ -13,7 +13,6 @@ namespace ECommerce.WebUI.Models
         [Required]
         [StringLength(60,MinimumLength =3,ErrorMessage ="Ürün ismi 3 ile 60 arası olmalı")]
         public string Name { get; set; }
-        [Required]
         public string ImageUrl { get; set; }
         [Required]
         [StringLength(60, MinimumLength = 10, ErrorMessage = "Ürün ismi 10 ile 60 arası olmalı")]
