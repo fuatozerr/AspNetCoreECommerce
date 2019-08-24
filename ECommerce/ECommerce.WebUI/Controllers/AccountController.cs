@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebUI.Controllers
 {
+    [ValidateAntiForgeryToken]
     public class AccountController : Controller
     {
         private UserManager<ApplicationUser> _userManager;

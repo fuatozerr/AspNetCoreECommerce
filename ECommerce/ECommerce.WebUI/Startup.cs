@@ -73,7 +73,9 @@ namespace ECommerce.WebUI
                 options.Cookie = new CookieBuilder
                 {
                     HttpOnly = true,//scriptler ulasamaz
-                    Name = ".ECommerce.Security.Cookie"
+                    Name = ".ECommerce.Security.Cookie",
+                    SameSite=SameSiteMode.Strict //csrf token
+
                 };
 
             });
