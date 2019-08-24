@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ECommerce.WebUI.Identity;
 using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebUI.Controllers
@@ -14,11 +15,13 @@ namespace ECommerce.WebUI.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
+        private IEmailSender _mailSender;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender mailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailSender = mailSender;
         }
         public IActionResult Register()
         {
@@ -52,9 +55,11 @@ namespace ECommerce.WebUI.Controllers
                     userId=user.Id,
                     token= createtoken
                 });
+
+                await _mailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayın", $"Lütfen hesabınızı onaylaman için linke <a href='http://localhost:63762{callbackurl}'>tıklayınız.</a>");
                 // send email
 
-                return RedirectToAction("Account", "Login");
+                return RedirectToAction("Login", "Account");
             }
 
 

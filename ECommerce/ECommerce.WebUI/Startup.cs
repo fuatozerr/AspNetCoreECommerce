@@ -6,12 +6,14 @@ using ECommerce.Business.Abstract;
 using ECommerce.Business.Concrete;
 using ECommerce.DataAccess.Abstract;
 using ECommerce.DataAccess.Concrete.EfCore;
+using ECommerce.WebUI.EMailServices;
 using ECommerce.WebUI.Identity;
 using ECommerce.WebUI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,7 +63,7 @@ namespace ECommerce.WebUI
                 options.SignIn.RequireConfirmedEmail = true; //onay için
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
-            });
+            });  //session ayarları
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -78,7 +80,7 @@ namespace ECommerce.WebUI
 
                 };
 
-            });
+            }); //cookie ayarları
 
 
             services.AddScoped<IProductDal, EfCoreProductDal>();
@@ -87,7 +89,7 @@ namespace ECommerce.WebUI
 
             services.AddScoped<IProductService, ProductManager>();
 
-
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
 
