@@ -58,7 +58,7 @@ namespace ECommerce.WebUI
                 //options.User.AllowedUserNameCharacters = ""; izin verdiğimiz karakterler 
 
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = false; //onay için
+                options.SignIn.RequireConfirmedEmail = true; //onay için
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
             });
@@ -73,7 +73,7 @@ namespace ECommerce.WebUI
                 options.Cookie = new CookieBuilder
                 {
                     HttpOnly = true,//scriptler ulasamaz
-                    Name = ".ECommerce.Security.Cookie",
+                    Name = ".ShopApp.Security.Cookie",
                     SameSite=SameSiteMode.Strict //csrf token
 
                 };

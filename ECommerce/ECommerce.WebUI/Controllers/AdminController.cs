@@ -201,5 +201,7 @@ namespace ECommerce.WebUI.Controllers
 
             return Redirect("/admin/editcategory/"+categoryId);
         }
+
+        
     }
 }
