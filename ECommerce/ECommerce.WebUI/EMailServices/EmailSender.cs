@@ -3,6 +3,7 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,8 @@ namespace ECommerce.WebUI.EMailServices
 {
     public class EmailSender : IEmailSender
     {
-        private const string SendGridApiKey="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";
+
+        private const string SendGridApiKey= "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";
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {

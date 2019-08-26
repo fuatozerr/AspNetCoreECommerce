@@ -75,35 +75,35 @@ namespace ECommerce.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginModel model)
         {
-            returnUrl = returnUrl ?? "~/";
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage="Bu kullanıcı ile daha önce hesap oluşturulmamış.";
+                ModelState.AddModelError("", "Bu email ile daha önce hesap oluşturulmamış.");
                 return View(model);
             }
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
-                ModelState.AddModelError("", "Hesabınızı onaylayın.");
+                ModelState.AddModelError("", "Lütfen hesabınızı email ile onaylayınız.");
+                return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, true, false);
+
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
 
             if (result.Succeeded)
             {
-                return Redirect(returnUrl);
+                return Redirect(model.ReturnUrl ?? "~/");
             }
 
-            ModelState.AddModelError("", "Kullanıcı adı ve ya parola yanlış");
+            ModelState.AddModelError("", "Email veya parola yanlış");
             return View(model);
         }
 
@@ -141,6 +141,81 @@ namespace ECommerce.WebUI.Controllers
             }
             TempData["message"] = "Hesabınız onaylanmadı";
 
+            return View();
+        }
+
+
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task< IActionResult >ForgotPassword(string Email)
+        {
+            if(string.IsNullOrEmpty(Email)) //boş ise
+            {
+                ViewBag.ErrorMessage = "Tekrar deneyin";
+                return View();
+            }
+            var user =await _userManager.FindByEmailAsync(Email);
+
+            if(user==null)
+            {
+                ViewBag.ErrorMessage = "Mailinizi kontrol edin";
+                return View();
+            }
+
+            var retoken =await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackurl = Url.Action("ResetPassword", "Account", new
+            {
+                userId = user.Id,
+                token = retoken
+            });
+
+            await _mailSender.SendEmailAsync(Email, "Parola sıfırlama işlemi", $"Lütfen hesabınızı onaylaman için linke <a href='http://localhost:63762{callbackurl}'>tıklayınız.</a>");
+            // send email
+
+            return RedirectToAction("Login", "Account");
+            //mail kontrol varsa kullanıcıya tekrar şifre yolla
+        }
+
+        public IActionResult ResetPassword(string token)
+        {
+            if( token==null)
+            {
+                ViewBag.ErrorMessage = "Kullanıcı yok";
+                return View();
+            }
+            var model = new ResetPasswordModel { Token = token };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>ResetPassword(ResetPasswordModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.EMail);
+
+            if(user==null)
+            {
+                ViewBag.ErrorMessage = "Kullanıcı yoktur";
+                return View(model);
+
+            }
+            var result =await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+            if(result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
     }
