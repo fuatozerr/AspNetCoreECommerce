@@ -7,6 +7,7 @@ using ECommerce.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using ECommerce.WebUI.Extensions;
 
 namespace ECommerce.WebUI.Controllers
 {
@@ -59,6 +60,15 @@ namespace ECommerce.WebUI.Controllers
                 await _mailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayın", $"Lütfen hesabınızı onaylaman için linke <a href='http://localhost:63762{callbackurl}'>tıklayınız.</a>");
                 // send email
 
+                TempData.Put("message", new ResultMessage()
+                { 
+                  Title="Hesap onayı",
+                  Message="Likne tıklayıp hesabınızı onaylayın",
+                  Css="warning"
+                });
+
+                
+
                 return RedirectToAction("Login", "Account");
             }
 
@@ -103,6 +113,7 @@ namespace ECommerce.WebUI.Controllers
                 return Redirect(model.ReturnUrl ?? "~/");
             }
 
+
             ModelState.AddModelError("", "Email veya parola yanlış");
             return View(model);
         }
@@ -111,6 +122,12 @@ namespace ECommerce.WebUI.Controllers
         public async Task<IActionResult>Logout()
         {
             await _signInManager.SignOutAsync();
+            TempData.Put("message", new ResultMessage()
+            {
+                Title = "Hesap çıkış",
+                Message = "Çıkış yaptınız",
+                Css = "warning"
+            });
             return RedirectToAction("Index", "Home");
         }
 
@@ -119,14 +136,24 @@ namespace ECommerce.WebUI.Controllers
         {
             if(userId==null || token==null)
             {
-                TempData["message"] = "Geçersiz token";
+                TempData.Put("message", new ResultMessage()
+                {
+                    Title = "Hesap onaylayın",
+                    Message = "Likne tıklayıp hesabınızı onaylayın",
+                    Css = "success"
+                });
                 return View();
             }
 
             var user = await _userManager.FindByIdAsync(userId);
             if(user==null)
             {
-                TempData["message"] = "Geçersiz kullanıcı";
+                TempData.Put("message", new ResultMessage()
+                {
+                    Title = "Hesap onaylanmadı",
+                    Message = "Gerçersiz kullanıcı",
+                    Css = "warning"
+                });
                 return View();
             }
 
@@ -134,13 +161,22 @@ namespace ECommerce.WebUI.Controllers
 
             if(result.Succeeded)
             {
-                TempData["message"] = "Hesabını onaylandı";
+                TempData.Put("message", new ResultMessage()
+                {
+                    Title = "Hesap onayı",
+                    Message = "Hesabınız onaylandı",
+                    Css = "success"
+                });
 
-                return View();
+                return RedirectToAction("Login");
 
             }
-            TempData["message"] = "Hesabınız onaylanmadı";
-
+            TempData.Put("message", new ResultMessage()
+            {
+                Title = "Hesap onayı",
+                Message = "Hesap onaylanmadı",
+                Css = "danger"
+            });
             return View();
         }
 

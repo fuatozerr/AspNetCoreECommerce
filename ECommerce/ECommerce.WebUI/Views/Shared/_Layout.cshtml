@@ -1,7 +1,4 @@
 ﻿
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
@@ -17,6 +14,12 @@
 <body>
     <partial name="_navbar" />
     <div class="container pt-100 mb-5">
+
+        @if (TempData["message"] != null)
+        {
+            <partial name="_resultmessage" model="@(TempData.Get<ResultMessage>("message"))" />
+        }
+
         @RenderBody()
     </div>
 
@@ -24,6 +27,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="/modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    @RenderSection("Scripts",false)
+    @RenderSection("Scripts", false)
 </body>
 </html>
