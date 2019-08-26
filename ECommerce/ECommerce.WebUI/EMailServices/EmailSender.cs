@@ -11,9 +11,7 @@ namespace ECommerce.WebUI.EMailServices
 {
     public class EmailSender : IEmailSender
     {
-
-        private const string SendGridApiKey= "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";
-
+     private const string SendGridApiKey= "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";
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             //var apikey = Environment.GetEnvironmentVariable(SendGridApiKey);//sitede gördüm

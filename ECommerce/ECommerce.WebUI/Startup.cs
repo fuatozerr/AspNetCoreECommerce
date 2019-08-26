@@ -85,7 +85,11 @@ namespace ECommerce.WebUI
 
             services.AddScoped<IProductDal, EfCoreProductDal>();
             services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
+            services.AddScoped<ICartDal, EfCoreCartDal>();
+
+
             services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<ICartService, CartManager>();
 
             services.AddScoped<IProductService, ProductManager>();
 

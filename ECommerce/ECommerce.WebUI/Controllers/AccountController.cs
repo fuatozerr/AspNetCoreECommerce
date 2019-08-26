@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using ECommerce.WebUI.Extensions;
+using ECommerce.Business.Concrete;
+using ECommerce.Business.Abstract;
 
 namespace ECommerce.WebUI.Controllers
 {
@@ -17,12 +19,14 @@ namespace ECommerce.WebUI.Controllers
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
         private IEmailSender _mailSender;
+        private ICartService _cartService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender mailSender)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender mailSender, ICartService cartService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mailSender = mailSender;
+            _cartService = cartService;
         }
         public IActionResult Register()
         {
@@ -59,6 +63,10 @@ namespace ECommerce.WebUI.Controllers
 
                 await _mailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayın", $"Lütfen hesabınızı onaylaman için linke <a href='http://localhost:63762{callbackurl}'>tıklayınız.</a>");
                 // send email
+
+
+                //kart olusturulcak
+                _cartService.InitializeCart(user.Id);
 
                 TempData.Put("message", new ResultMessage()
                 { 
