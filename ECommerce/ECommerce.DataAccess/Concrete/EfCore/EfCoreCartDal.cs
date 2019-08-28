@@ -24,7 +24,17 @@ namespace ECommerce.DataAccess.Concrete.EfCore
             {
                 return context.Carts.Include(x => x.CartItems)
                     .ThenInclude(x => x.Product)
-                    .FirstOrDefault(i => i.UserId==userId);            }
+                    .FirstOrDefault(i => i.UserId==userId);
+            }
+        }
+
+        public void DeleteFromCart(int cartId, int productId)
+        {
+            using (var context = new ShopContext())
+            {
+                var cmd = @"delete from CartItem where CartId=@p0 And ProductId=@p1";
+                context.Database.ExecuteSqlCommand(cmd, cartId, productId);
+            }
         }
     }
 }
