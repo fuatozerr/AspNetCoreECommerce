@@ -55,5 +55,11 @@ namespace ECommerce.WebUI.Controllers
             _cartService.DeleteFromCart(_userManager.GetUserId(User), productId);
             return RedirectToAction("Index");
         }
+
+
+        public IActionResult Checkout()
+        {
+            return View();
+        }
     }
 }
