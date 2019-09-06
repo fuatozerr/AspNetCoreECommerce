@@ -86,13 +86,14 @@ namespace ECommerce.WebUI
             services.AddScoped<IProductDal, EfCoreProductDal>();
             services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
             services.AddScoped<ICartDal, EfCoreCartDal>();
+            services.AddScoped<IOrderDal, EfCoreOrderDal>();
+
 
 
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICartService, CartManager>();
-
+            services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IProductService, ProductManager>();
-
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
@@ -143,7 +144,7 @@ namespace ECommerce.WebUI
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            }); //routes
 
             SeedIdentity.Seed(userManager, roleManager, Configuration).Wait();
         }
