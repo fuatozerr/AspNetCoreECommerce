@@ -148,7 +148,7 @@ namespace ECommerce.WebUI.Controllers
             _orderService.Create(order);
         }
 
-        private void ClearCart(string userId)
+        private void ClearCart(string cartId)
         {
             _cartService.ClearCart(cartId);
         }
@@ -237,6 +237,42 @@ namespace ECommerce.WebUI.Controllers
 
             return Payment.Create(request, options);
 
+        }
+
+        public IActionResult GetOrders()
+        {
+            var orders = _orderService.GetOrders(_userManager.GetUserId(User));
+            var orderListModel = new List<OrderListModel>();
+            OrderListModel orderModel;
+
+            foreach (var order in orders)
+            {
+                orderModel = new OrderListModel();
+                orderModel.OrderId = order.Id;
+                orderModel.OrderNumber = order.OrderNumber;
+                orderModel.OrderDate = order.OrderDate;
+                orderModel.OrderNote = order.OrderNote;
+                orderModel.Phone = order.Phone;
+                orderModel.FirtName = order.FirtName;
+                orderModel.LastName = order.LastName;
+                orderModel.Email = order.Email;
+                orderModel.Address = order.Address;
+                orderModel.City = order.City;
+
+                orderModel.OrderItems = order.OrderItems.Select(i => new OrderItemModel()
+                {
+                    OrderItemId = i.Id,
+                    Name = i.Product.Name,
+                    Price = i.Price,
+                    Quantity = i.Quantity,
+                    ImageUrl = i.Product.ImageUrl
+                }).ToList();
+
+                orderListModel.Add(orderModel);
+
+            }
+
+            return View(orderListModel);
         }
 
 

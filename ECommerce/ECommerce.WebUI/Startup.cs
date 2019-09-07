@@ -140,6 +140,11 @@ namespace ECommerce.WebUI
                     template: "cart",
                     defaults: new { controller = "Cart", action = "Index" });
 
+                routes.MapRoute(
+                    name: "orders",
+                    template: "orders",
+                    defaults: new { controller = "Cart", action = "GetOrders" });
+
 
                 routes.MapRoute(
                     name: "default",
