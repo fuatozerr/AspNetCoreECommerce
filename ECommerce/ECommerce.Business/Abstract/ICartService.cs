@@ -12,5 +12,6 @@ namespace ECommerce.Business.Abstract
 
         void AddToCart(string userId,int productId,int quantity);
         void DeleteFromCart(string userId, int productId);
+        void ClearCart(object cartId);
     }
 }
